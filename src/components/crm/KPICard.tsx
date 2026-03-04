@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { LucideIcon } from "lucide-react";
 
 interface KPICardProps {
@@ -21,6 +20,17 @@ const colorMap: Record<string, string> = {
   open: "bg-crm-open/10 text-crm-open",
 };
 
+const gradientMap: Record<string, string> = {
+  primary: "from-primary/5 to-transparent",
+  hot: "from-crm-hot/5 to-transparent",
+  warm: "from-crm-warm/5 to-transparent",
+  cold: "from-crm-cold/5 to-transparent",
+  closed: "from-crm-closed/5 to-transparent",
+  missed: "from-crm-missed/5 to-transparent",
+  qualified: "from-crm-qualified/5 to-transparent",
+  open: "from-crm-open/5 to-transparent",
+};
+
 const dotColorMap: Record<string, string> = {
   primary: "bg-primary",
   hot: "bg-crm-hot",
@@ -35,20 +45,29 @@ const dotColorMap: Record<string, string> = {
 export function KPICard({ title, value, icon: Icon, color, onClick, subtitle }: KPICardProps) {
   const iconColor = colorMap[color] || colorMap.primary;
   const dotColor = dotColorMap[color] || dotColorMap.primary;
+  const gradient = gradientMap[color] || gradientMap.primary;
 
   return (
-    <div className="crm-kpi-card group" onClick={onClick}>
-      <div className="flex items-start justify-between mb-3">
-        <div className={`p-2 rounded-lg ${iconColor}`}>
-          <Icon className="h-4 w-4" />
+    <div
+      className={`crm-kpi-card group relative overflow-hidden bg-gradient-to-br ${gradient}`}
+      onClick={onClick}
+    >
+      {/* Decorative accent */}
+      <div className={`absolute top-0 right-0 w-20 h-20 rounded-full ${dotColor} opacity-[0.04] -translate-y-8 translate-x-8 group-hover:scale-150 transition-transform duration-500`} />
+      
+      <div className="relative">
+        <div className="flex items-start justify-between mb-3">
+          <div className={`p-2.5 rounded-xl ${iconColor} transition-transform duration-200 group-hover:scale-110`}>
+            <Icon className="h-4 w-4" />
+          </div>
+          <div className={`h-2 w-2 rounded-full ${dotColor} animate-pulse`} />
         </div>
-        <div className={`h-2 w-2 rounded-full ${dotColor}`} />
-      </div>
-      <p className="text-2xl font-bold animate-count-up">{value}</p>
-      <p className="text-xs text-muted-foreground mt-1 font-medium">{title}</p>
-      {subtitle && <p className="text-[10px] text-muted-foreground/60 mt-0.5">{subtitle}</p>}
-      <div className="mt-3 text-[10px] text-primary opacity-0 group-hover:opacity-100 transition-opacity font-medium">
-        Click to view details →
+        <p className="text-2xl md:text-3xl font-extrabold tracking-tight">{value}</p>
+        <p className="text-xs text-muted-foreground mt-1.5 font-medium leading-tight">{title}</p>
+        {subtitle && <p className="text-[10px] text-muted-foreground/60 mt-0.5">{subtitle}</p>}
+        <div className="mt-3 text-[10px] text-primary opacity-0 group-hover:opacity-100 transition-all duration-200 font-semibold flex items-center gap-1">
+          View details <span className="inline-block group-hover:translate-x-0.5 transition-transform">→</span>
+        </div>
       </div>
     </div>
   );

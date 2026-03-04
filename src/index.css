@@ -81,18 +81,30 @@
 
 @layer components {
   .crm-kpi-card {
-    @apply bg-card rounded-lg border border-border p-5 cursor-pointer transition-all duration-200;
+    @apply bg-card rounded-xl border border-border p-4 md:p-5 cursor-pointer transition-all duration-300;
     box-shadow: var(--crm-shadow-sm);
   }
   .crm-kpi-card:hover {
-    box-shadow: var(--crm-shadow-md);
-    @apply border-primary/30 -translate-y-0.5;
+    box-shadow: var(--crm-shadow-lg);
+    @apply border-primary/30 -translate-y-1;
   }
   .crm-section-title {
-    @apply text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3;
+    @apply text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-2.5 flex items-center gap-2;
+  }
+  .crm-section-title::before {
+    content: "";
+    @apply w-1 h-3.5 bg-primary rounded-full;
   }
   .crm-filter-bar {
-    @apply bg-card rounded-lg border border-border p-4;
+    @apply bg-card rounded-xl border border-border p-3 md:p-4;
     box-shadow: var(--crm-shadow-sm);
   }
+}
+
+@keyframes slide-in-left {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+.animate-slide-in-left {
+  animation: slide-in-left 0.25s ease-out;
 }

@@ -54,13 +54,13 @@ export default function DashboardPage() {
     setModal({ title, data: items, columns });
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4 md:space-y-5">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl font-bold">Sales Dashboard</h1>
+          <h1 className="text-lg md:text-xl font-bold">Sales Dashboard</h1>
           <p className="text-xs text-muted-foreground">
-            {role === "admin" ? "Company-wide overview" : "Your daily workbench"} · March 3, 2026
+            {role === "admin" ? "Company-wide overview" : "Your daily workbench"} · March 4, 2026
           </p>
         </div>
         {role === "admin" && <AdminLeadUpload />}
@@ -75,7 +75,7 @@ export default function DashboardPage() {
       {/* Row 1: Daily Activity */}
       <div>
         <p className="crm-section-title">Daily Activity</p>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
           <KPICard title="Total Calls (Today)" value={data.todayCalls.length} icon={Phone} color="primary"
             onClick={() => open("Today's Calls", data.todayCalls, callCols)} />
           <KPICard title="Today Follow-ups" value={data.todayFollowUps.length} icon={CalendarCheck} color="warm"
@@ -90,7 +90,7 @@ export default function DashboardPage() {
       {/* Row 2: Lead Pipeline */}
       <div>
         <p className="crm-section-title">Lead Pipeline</p>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-3">
           <KPICard title="Open Leads" value={data.openLeads.length} icon={Users} color="open"
             onClick={() => open("Open Leads", data.openLeads, leadCols)} />
           <KPICard title="Qualified" value={data.qualifiedLeads.length} icon={TrendingUp} color="qualified"
@@ -109,7 +109,7 @@ export default function DashboardPage() {
       {/* Row 3: Missed & Risk */}
       <div>
         <p className="crm-section-title">Missed & Risk Metrics</p>
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3">
           <KPICard title="Missed Follow-ups (7d)" value={data.missedFollowUps7d.length} icon={AlertTriangle} color="missed"
             onClick={() => open("Missed Follow-ups (Last 7 Days)", data.missedFollowUps7d, followUpCols)} />
           <KPICard title="Missed Meetings (7d)" value={data.missedMeetings7d.length} icon={Clock} color="missed"
@@ -122,7 +122,7 @@ export default function DashboardPage() {
       {/* Row 4: Upcoming */}
       <div>
         <p className="crm-section-title">Upcoming Planning</p>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
           <KPICard title="Next 7 Days Meetings" value={data.next7dMeetings.length} icon={CalendarDays} color="primary"
             onClick={() => open("Next 7 Days Meetings", data.next7dMeetings, meetingCols)} />
           <KPICard title="Upcoming Meetings" value={data.upcomingMeetings.length} icon={CalendarCheck} color="qualified"
@@ -133,7 +133,7 @@ export default function DashboardPage() {
       {/* Charts */}
       <div>
         <p className="crm-section-title">Analytics</p>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
           <LeadsCreatedChart />
           <CallsByEmployeeChart />
           <LeadsByProductChart />
