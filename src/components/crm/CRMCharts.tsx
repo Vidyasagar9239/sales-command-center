@@ -4,7 +4,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
 } from "recharts";
 
-const chartCardClass = "bg-card rounded-xl border border-border p-4 md:p-5 shadow-sm hover:shadow-md transition-shadow duration-200";
+const chartCardClass = "crm-glass-card p-4 md:p-5";
 
 export function LeadsCreatedChart() {
   return (
