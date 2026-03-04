@@ -81,42 +81,76 @@
 
 @layer components {
   .crm-kpi-card {
-    @apply bg-card rounded-xl border border-white/60 p-4 md:p-5 cursor-pointer transition-all duration-300 relative;
-    box-shadow:
-      var(--crm-shadow-sm),
-      inset 0 1px 0 0 rgba(255,255,255,0.7),
-      inset 0 -1px 0 0 rgba(0,0,0,0.04);
+    @apply rounded-xl border border-white/40 p-4 md:p-5 cursor-pointer transition-all duration-300 relative overflow-hidden;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
     background: linear-gradient(
       145deg,
-      hsl(var(--card)) 0%,
-      hsl(var(--card)) 50%,
-      hsl(var(--background)) 100%
+      hsl(var(--card) / 0.75) 0%,
+      hsl(var(--card) / 0.5) 50%,
+      hsl(var(--background) / 0.6) 100%
     );
+    box-shadow:
+      0 4px 20px -4px rgba(0,0,0,0.06),
+      inset 0 1px 0 0 rgba(255,255,255,0.6),
+      inset 0 -1px 0 0 rgba(0,0,0,0.03),
+      0 0 0 1px rgba(255,255,255,0.15);
   }
+
+  /* Glass refraction highlight */
   .crm-kpi-card::before {
     content: "";
     position: absolute;
-    inset: 0;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
     border-radius: inherit;
-    background: linear-gradient(
-      135deg,
-      rgba(255,255,255,0.5) 0%,
-      rgba(255,255,255,0.1) 40%,
+    background: radial-gradient(
+      ellipse at 30% 20%,
+      rgba(255,255,255,0.35) 0%,
+      rgba(255,255,255,0.08) 30%,
       transparent 60%
     );
     pointer-events: none;
     z-index: 1;
-    transition: opacity 0.3s;
+    transition: opacity 0.4s ease;
   }
+
+  /* Shimmer sweep animation */
+  .crm-kpi-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      105deg,
+      transparent 20%,
+      rgba(255,255,255,0.12) 40%,
+      rgba(255,255,255,0.4) 50%,
+      rgba(255,255,255,0.12) 60%,
+      transparent 80%
+    );
+    pointer-events: none;
+    z-index: 2;
+    animation: shimmer-sweep 4s ease-in-out infinite;
+    animation-delay: calc(var(--shimmer-delay, 0) * 1s);
+  }
+
   .crm-kpi-card:hover::before {
-    opacity: 0.7;
+    opacity: 0.5;
   }
+
   .crm-kpi-card:hover {
     box-shadow:
-      var(--crm-shadow-lg),
+      0 8px 32px -8px rgba(0,0,0,0.1),
       inset 0 1px 0 0 rgba(255,255,255,0.8),
-      0 0 0 1px hsl(var(--primary) / 0.12);
+      0 0 0 1px hsl(var(--primary) / 0.15),
+      0 0 24px -8px hsl(var(--primary) / 0.08);
     @apply -translate-y-1.5 scale-[1.02];
+    backdrop-filter: blur(20px) saturate(200%);
   }
   .crm-section-title {
     @apply text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-2.5 flex items-center gap-2;
@@ -138,3 +172,18 @@
 .animate-slide-in-left {
   animation: slide-in-left 0.25s ease-out;
 }
+
+@keyframes shimmer-sweep {
+  0% { left: -100%; opacity: 0; }
+  15% { opacity: 1; }
+  50% { left: 120%; opacity: 0; }
+  100% { left: 120%; opacity: 0; }
+}
+
+/* Stagger shimmer per card */
+.crm-kpi-card:nth-child(1) { --shimmer-delay: 0; }
+.crm-kpi-card:nth-child(2) { --shimmer-delay: 0.6; }
+.crm-kpi-card:nth-child(3) { --shimmer-delay: 1.2; }
+.crm-kpi-card:nth-child(4) { --shimmer-delay: 1.8; }
+.crm-kpi-card:nth-child(5) { --shimmer-delay: 2.4; }
+.crm-kpi-card:nth-child(6) { --shimmer-delay: 3.0; }
